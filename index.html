@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অন্নপূর্ণা ভান্ডার আবেদন পোর্টাল</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary-orange: #E8751A;
+    --primary-dark: #C85A10;
+    --header-brown: #8B4513;
+    --navy-blue: #1B3A6B;
+    --bg-gradient-start: #D4956A;
+    --bg-gradient-end: #A0622A;
+    --bg-warm: #F5E6C8;
+    --text-orange-heading: #E8751A;
+    --footer-dark: #5C2E00;
+    --footer-link: #90EE90;
+    --white: #ffffff;
+    --input-border: #cccccc;
+    --error: #c0392b;
+    --success: #27ae60;
+    --ad-bg: #f5f0e8;
+    --ad-border: #C4813A;
+    --text-main: #1a1a1a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--ad-border) 50%, var(--bg-gradient-end) 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: var(--white);
+    text-align: center;
+    padding: 20px 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-title {
+    color: var(--primary-orange);
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.header-subtitle {
+    color: #555;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.portal-pill {
+    background: var(--header-brown);
+    color: var(--white);
+    border-radius: 25px;
+    padding: 10px 30px;
+    font-size: 18px;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.layout-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex: 1;
+    width: 100%;
+}
+
+.main-content {
+    flex: 1;
+    max-width: 620px;
+    width: 100%;
+}
+
+.form-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    padding: 28px;
+    margin-bottom: 20px;
+}
+
+.sidebar-ad-wrapper {
+    width: 300px;
+    position: sticky;
+    top: 20px;
+}
+
+/* Ad Slots */
+.ad-slot {
+    background: var(--ad-bg);
+    border: 2px dashed var(--ad-border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--header-brown);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 15px auto;
+    text-align: center;
+    width: 100%;
+}
+
+#ad-top, #ad-bottom { max-width: 728px; min-height: 90px; }
+#ad-sidebar { min-height: 250px; width: 300px; margin: 0; }
+.ad-mid { min-height: 80px; margin: 20px 0; }
+
+/* Progress Bar */
+.progress-container { margin-bottom: 25px; }
+.progress-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--header-brown); margin-bottom: 8px; }
+.progress-track { background: #e0d5c0; border-radius: 10px; height: 8px; width: 100%; overflow: hidden; }
+.progress-fill { background: var(--primary-orange); height: 100%; width: 8.33%; transition: width 0.3s ease; }
+
+/* Form Sections */
+.step-section { display: none; animation: fadeIn 0.3s ease; }
+.step-section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-heading {
+    background: linear-gradient(90deg, var(--primary-orange), var(--primary-dark));
+    color: var(--white);
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.info-box {
+    background: #FFF3E0;
+    border-left: 4px solid var(--primary-orange);
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--footer-dark);
+    margin-bottom: 15px;
+}
+
+.member-card {
+    background: #FFF8F0;
+    border: 1px solid #E8C49A;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+.member-card h4 { color: var(--header-brown); margin-bottom: 12px; font-size: 15px; border-bottom: 1px solid #E8C49A; padding-bottom: 5px; }
+
+/* Form Controls */
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #333; }
+.input-control {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Hind Siliguri', sans-serif;
+    transition: all 0.2s;
+    background: var(--white);
+}
+.input-control:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(232,117,26,0.15);
+    outline: none;
+}
+textarea.input-control { resize: vertical; min-height: 80px; }
+
+.radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; }
+.radio-label, .checkbox-label {
+    display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer;
+    min-height: 44px; /* Touch target */
+}
+input[type="radio"], input[type="checkbox"] { accent-color: var(--primary-orange); width: 18px; height: 18px; cursor: pointer; }
+
+.error-msg { color: var(--error); font-size: 12px; margin-top: 4px; display: none; font-weight: 600; }
+.has-error .input-control { border-color: var(--error); }
+.has-error .error-msg { display: block; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 13px; }
+table, th, td { border: 1px solid var(--input-border); }
+th, td { padding: 8px; text-align: left; }
+th { background: #f5f0e8; color: var(--header-brown); }
+
+/* Buttons */
+.btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
+.btn {
+    border: none; border-radius: 25px; padding: 13px 32px; font-size: 16px; font-weight: 600;
+    font-family: 'Hind Siliguri', sans-serif; cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.btn-primary { background: var(--primary-orange); color: var(--white); }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.btn-secondary { background: var(--navy-blue); color: var(--white); }
+.btn-secondary:hover { background: #142d54; }
+.btn-submit { background: #8B0000; color: var(--white); width: 100%; border-radius: 8px; margin-top: 15px; }
+.btn-submit:hover { background: #600000; }
+
+/* Review Accordion */
+details { background: #FFF8F0; border: 1px solid #E8C49A; border-radius: 6px; margin-bottom: 10px; }
+summary { padding: 12px 15px; font-weight: 600; color: var(--header-brown); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '▼'; color: var(--primary-orange); font-size: 12px; transition: transform 0.2s; }
+details[open] summary::after { transform: rotate(180deg); }
+.details-content { padding: 15px; border-top: 1px solid #E8C49A; font-size: 14px; background: var(--white); }
+.details-content p { margin-bottom: 6px; border-bottom: 1px dashed #eee; padding-bottom: 4px; }
+.details-content strong { color: #555; }
+
+/* Modals & Toasts */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-card {
+    background: var(--white); border-radius: 12px; border-top: 5px solid var(--primary-orange);
+    padding: 30px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.success-icon {
+    width: 60px; height: 60px; border-radius: 50%; background: #e8f5e9; color: var(--success);
+    font-size: 40px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;
+}
+.app-id { font-size: 22px; color: var(--primary-orange); font-weight: 700; margin: 15px 0; padding: 10px; background: #fff3e0; border-radius: 6px; }
+
+.toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #333; color: white; padding: 12px 24px; border-radius: 30px;
+    font-size: 14px; display: none; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.toast-actions { display: flex; gap: 10px; margin-top: 10px; justify-content: center; }
+.toast-btn { background: var(--primary-orange); border: none; color: white; padding: 5px 15px; border-radius: 15px; cursor: pointer; font-family: inherit; }
+
+/* Footer */
+footer {
+    background: var(--footer-dark); color: #f0e0c0; font-size: 12px; text-align: center; padding: 20px; margin-top: auto;
+}
+footer a { color: var(--footer-link); text-decoration: none; }
+.clear-btn { background: transparent; border: 1px solid #f0e0c0; color: #f0e0c0; padding: 5px 15px; border-radius: 15px; margin-top: 15px; cursor: pointer; font-family: inherit; }
+
+.hidden { display: none !important; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .layout-wrapper { flex-direction: column; padding: 10px; }
+    .sidebar-ad-wrapper { display: none; }
+    .main-content { max-width: 100%; }
+    .btn-group { flex-direction: column-reverse; }
+    .btn { width: 100%; }
+    #ad-top, #ad-bottom { min-height: 50px; }
+}
+
+/* Print Styles */
+@media print {
+    body { background: white; color: black; }
+    header, .ad-slot, .sidebar-ad-wrapper, .btn-group, .progress-container, footer, .modal-overlay { display: none !important; }
+    .layout-wrapper { padding: 0; display: block; }
+    .main-content, .form-card { max-width: 100%; width: 100%; box-shadow: none; margin: 0; padding: 0; }
+    .step-section { display: block !important; page-break-inside: avoid; margin-bottom: 20px; }
+    .step-heading { background: #eee !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    input, select, textarea { border: none !important; border-bottom: 1px solid #ccc !important; border-radius: 0 !important; background: transparent !important; }
+    .member-card { border: 1px solid #ccc; break-inside: avoid; }
+    #step-12 { display: none !important; } /* Hide review step in print since all steps are shown */
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-title">পশ্চিমবঙ্গ সরকার</div>
+    <div class="header-subtitle">GOVERNMENT OF WEST BENGAL</div>
+    <div class="portal-pill">অন্নপূর্ণা ভান্ডার আবেদন পোর্টাল</div>
+</header>
+
+<div class="ad-slot" id="ad-top">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div class="layout-wrapper">
+    <main class="main-content">
+        <div class="form-card">
+            
+        <div class="progress-container">
+            <div class="progress-header">
+                <span id="step-text">ধাপ ১ / ১২</span>
+                <span id="step-title">পারিবারিক পরিচয়</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <form id="anpForm" novalidate>
+
+            <!-- STEP 1 -->
+            <div class="step-section active" id="step-1">
+                <div class="step-heading">১. পারিবারিক পরিচয় (ক)</div>
+                
+                <div class="input-group">
+                    <label>পরিবারের প্রধানের নাম (HOF) <span style="color:red">*</span></label>
+                    <input type="text" class="input-control" name="hof_name" placeholder="আধার কার্ড অনুযায়ী পুরো নাম লিখুন" required>
+                    <div class="error-msg">এই ঘরটি পূরণ করা আবশ্যক</div>
+                </div>
+
+                <div class="input-group">
+                    <label>জন্ম তারিখ <span style="color:red">*</span></label>
+                    <input type="date" class="input-control" name="hof_dob" required max="2026-05-29">
+                    <div class="error-msg">সঠিক জন্ম তারিখ প্রদান করুন</div>
+                </div>
+
+                <div class="input-group">
+                    <label>পরিবারের প্রধানের লিঙ্গ <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="hof_gender" value="পুরুষ" required> পুরুষ</label>
+                        <label class="radio-label"><input type="radio" name="hof_gender" value="মহিলা"> মহিলা</label>
+                        <label class="radio-label"><input type="radio" name="hof_gender" value="অন্যান্য"> অন্যান্য</label>
+                    </div>
+                    <div class="error-msg">লিঙ্গ নির্বাচন করুন</div>
+                </div>
+
+                <div class="input-group">
+                    <label>আধার নং <span style="color:red">*</span></label>
+                    <input type="text" class="input-control" name="hof_aadhaar" maxlength="12" pattern="\d{12}" placeholder="১২ অঙ্কের আধার নম্বর" required>
+                    <div class="error-msg">সঠিক ১২ অঙ্কের আধার নম্বর লিখুন</div>
+                </div>
+
+                <div class="input-group">
+                    <label>ডিজিটাল রেশন কার্ডের পারিবারিক আইডি</label>
+                    <input type="text" class="input-control" name="hof_ration_id" placeholder="ঐচ্ছিক">
+                </div>
+
+                <div class="input-group">
+                    <label>পরিবারের সদস্য সংখ্যা <span style="color:red">*</span></label>
+                    <input type="number" class="input-control" name="member_count" id="memberCount" min="1" max="10" value="1" required>
+                    <div class="error-msg">১ থেকে ১০ এর মধ্যে সংখ্যা লিখুন</div>
+                </div>
+
+                <div class="input-group">
+                    <label>ঠিকানা (স্থায়ী ঠিকানা) <span style="color:red">*</span></label>
+                    <textarea class="input-control" name="address" placeholder="সম্পূর্ণ ঠিকানা লিখুন" required></textarea>
+                    <div class="error-msg">ঠিকানা প্রদান করা আবশ্যক</div>
+                </div>
+
+                <div class="input-group">
+                    <label>যোগাযোগ নম্বর <span style="color:red">*</span></label>
+                    <input type="tel" class="input-control" name="phone" maxlength="10" pattern="\d{10}" placeholder="১০ অঙ্কের মোবাইল নম্বর" required>
+                    <div class="error-msg">সঠিক ১০ অঙ্কের মোবাইল নম্বর লিখুন</div>
+                </div>
+            </div>
+
+            <div class="ad-slot ad-mid hidden" id="ad-mid-1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step-section" id="step-2">
+                <div class="step-heading">২. পরিবারের সদস্যদের তথ্য</div>
+                <div class="info-box">পরিবারের প্রধান ব্যতীত অন্যান্য সদস্যদের তথ্য প্রদান করুন (সর্বোচ্চ ৫ জন প্রদর্শিত)। ৫ বছরের নিচে আধার প্রযোজ্য নয় (NA লিখুন)।</div>
+                <div id="dynamic-members-step2"></div>
+            </div>
+
+            <div class="ad-slot ad-mid hidden" id="ad-mid-2">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step-section" id="step-3">
+                <div class="step-heading">৩. ব্যাংক অ্যাকাউন্ট (DBT)</div>
+                <div class="info-box">DBT ক্রেডিটের জন্য আধার লিংক্ড ব্যাংক অ্যাকাউন্ট প্রদান করুন</div>
+                
+                <div class="member-card">
+                    <h4>পরিবারের প্রধান (HOF)</h4>
+                    <div class="input-group">
+                        <label>ব্যাংকের নাম <span style="color:red">*</span></label>
+                        <input type="text" class="input-control" name="hof_bank_name" required>
+                        <div class="error-msg">ব্যাংকের নাম আবশ্যক</div>
+                    </div>
+                    <div class="input-group">
+                        <label>অ্যাকাউন্ট নং <span style="color:red">*</span></label>
+                        <input type="text" class="input-control" name="hof_acc_no" required>
+                        <div class="error-msg">অ্যাকাউন্ট নং আবশ্যক</div>
+                    </div>
+                    <div class="input-group">
+                        <label>IFSC কোড <span style="color:red">*</span></label>
+                        <input type="text" class="input-control" name="hof_ifsc" pattern="^[A-Z]{4}0[A-Z0-9]{6}$" style="text-transform:uppercase" placeholder="উদাঃ SBIN0001234" required>
+                        <div class="error-msg">সঠিক IFSC কোড লিখুন</div>
+                    </div>
+                </div>
+                <div id="dynamic-members-step3"></div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="step-section" id="step-4">
+                <div class="step-heading">৪. এপিক নম্বর (ভোটার আইডি)</div>
+                <div class="member-card">
+                    <h4>পরিবারের প্রধান (HOF)</h4>
+                    <div class="input-group"><label>এপিক নং</label><input type="text" class="input-control" name="hof_epic"></div>
+                    <div class="input-group"><label>বিধানসভা ক্ষেত্র</label><input type="text" class="input-control" name="hof_assembly"></div>
+                    <div class="input-group"><label>অংশ নং</label><input type="text" class="input-control" name="hof_part_no"></div>
+                </div>
+                <div id="dynamic-members-step4"></div>
+            </div>
+
+            <div class="ad-slot ad-mid hidden" id="ad-mid-3">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="step-section" id="step-5">
+                <div class="step-heading">৫. বিভাগ ও রেশন কার্ড (খ)</div>
+                <div class="input-group">
+                    <label>বিভাগ <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="category" value="UR" required> অসংরক্ষিত (UR)</label>
+                        <label class="radio-label"><input type="radio" name="category" value="UR-EWS"> অসংরক্ষিত-আর্থিকভাবে দুর্বল (UR-EWS)</label>
+                        <label class="radio-label"><input type="radio" name="category" value="SC"> তফসিলি জাতি (SC)</label>
+                        <label class="radio-label"><input type="radio" name="category" value="ST"> তফসিলি উপজাতি (ST)</label>
+                        <label class="radio-label"><input type="radio" name="category" value="OBC"> অন্যান্য অনগ্রসর শ্রেণি (OBC)</label>
+                        <label class="radio-label"><input type="radio" name="category" value="PVTG"> বিশেষভাবে দুর্বলতর জনজাতি গোষ্ঠী (PVTG)</label>
+                    </div>
+                    <div class="error-msg">বিভাগ নির্বাচন করুন</div>
+                </div>
+
+                <div class="input-group">
+                    <label>ডিজিটাল রেশন কার্ড আছে কি? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="has_ration" value="হ্যাঁ" required onchange="document.getElementById('ration-details').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="has_ration" value="না" onchange="document.getElementById('ration-details').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+
+                <div id="ration-details" class="hidden" style="padding-left:15px; border-left:2px solid #ccc; margin-bottom:15px;">
+                    <div class="input-group">
+                        <label>কার্ডের ধরন</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="ration_type" value="AAY"> AAY</label>
+                            <label class="radio-label"><input type="radio" name="ration_type" value="PHH"> PHH</label>
+                            <label class="radio-label"><input type="radio" name="ration_type" value="SPHH"> SPHH</label>
+                            <label class="radio-label"><input type="radio" name="ration_type" value="RKSY1"> RKSY1</label>
+                            <label class="radio-label"><input type="radio" name="ration_type" value="RKSY2"> RKSY2</label>
+                            <label class="radio-label"><input type="radio" name="ration_type" value="ভর্তুকিহীন"> ভর্তুকিহীন</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>পরিবারটি রেশন দোকান থেকে মাসিক রেশন তুলছে কি না?</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="drawing_ration" value="হ্যাঁ"> হ্যাঁ</label>
+                            <label class="radio-label"><input type="radio" name="drawing_ration" value="না"> না</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 6 -->
+            <div class="step-section" id="step-6">
+                <div class="step-heading">৬. সম্পদ (গ)</div>
+                <div class="input-group">
+                    <label>৩ বা তার বেশি পাকা ঘর আছে? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="pucca_house" value="হ্যাঁ" required> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="pucca_house" value="না"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div class="input-group">
+                    <label>পারিবারিক জমির মালিকানা আছে? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="has_land" value="হ্যাঁ" required onchange="document.getElementById('land-details').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="has_land" value="না" onchange="document.getElementById('land-details').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="land-details" class="hidden input-group" style="padding-left:15px; border-left:2px solid #ccc;">
+                    <label>মোট জমির পরিমাণ (শতক)</label>
+                    <input type="number" class="input-control" name="land_amount" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label>যানবাহন (অ-বাণিজ্যিক মোটরচালিত) আছে কি? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="has_vehicle" value="হ্যাঁ" required onchange="document.getElementById('vehicle-details').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="has_vehicle" value="না" onchange="document.getElementById('vehicle-details').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="vehicle-details" class="hidden" style="padding-left:15px; border-left:2px solid #ccc; margin-bottom:15px;">
+                    <div class="input-group"><label>গাড়ির সংখ্যা</label><input type="number" class="input-control" name="vehicle_count" min="1"></div>
+                    <div class="input-group"><label>রেজিস্ট্রেশন নম্বর</label><input type="text" class="input-control" name="vehicle_reg"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>স্বাস্থ্যবিমা আছে কি? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="has_health_ins" value="হ্যাঁ" required onchange="document.getElementById('health-ins-details').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="has_health_ins" value="না" onchange="document.getElementById('health-ins-details').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="health-ins-details" class="hidden" style="padding-left:15px; border-left:2px solid #ccc;">
+                    <div class="member-card">
+                        <h4>পরিবারের প্রধান (HOF)</h4>
+                        <div class="checkbox-group mb-2">
+                            <label class="checkbox-label"><input type="checkbox" name="hof_ins_type" value="সরকারি"> সরকারি</label>
+                            <label class="checkbox-label"><input type="checkbox" name="hof_ins_type" value="বেসরকারি"> বেসরকারি</label>
+                        </div>
+                        <div class="input-group"><label>বিমা অঙ্ক (Sum Assured)</label><input type="number" class="input-control" name="hof_ins_sum"></div>
+                        <div class="input-group"><label>প্রিমিয়ামের বিবরণ</label><input type="text" class="input-control" name="hof_ins_prem"></div>
+                    </div>
+                    <div id="dynamic-members-step6"></div>
+                </div>
+            </div>
+
+            <div class="ad-slot ad-mid hidden" id="ad-mid-4">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+
+            <!-- STEP 7 -->
+            <div class="step-section" id="step-7">
+                <div class="step-heading">৭. আয়/পেশা (ঘ)</div>
+                <div class="input-group">
+                    <label>কোনো সদস্য কি আয়কর বা পেশাগত কর দেয়? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="pays_tax" value="হ্যাঁ" required> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="pays_tax" value="না"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+
+                <div class="input-group">
+                    <label>PAN কার্ড আছে? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="has_pan" value="হ্যাঁ" required onchange="document.getElementById('pan-details').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="has_pan" value="না" onchange="document.getElementById('pan-details').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="pan-details" class="hidden" style="padding-left:15px; border-left:2px solid #ccc; margin-bottom:15px;">
+                    <div class="member-card">
+                        <h4>পরিবারের প্রধান (HOF)</h4>
+                        <div class="input-group"><label>নাম</label><input type="text" class="input-control" name="hof_pan_name"></div>
+                        <div class="input-group"><label>প্যান নম্বর</label><input type="text" class="input-control" name="hof_pan_no" style="text-transform:uppercase"></div>
+                    </div>
+                    <div id="dynamic-members-step7-pan"></div>
+                </div>
+
+                <div class="info-box">কর্মসংস্থানের ধরন নির্বাচন করুন</div>
+                <div class="member-card">
+                    <h4>পরিবারের প্রধান (HOF)</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="সরকারি ক্ষেত্র"> সরকারি ক্ষেত্র</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="বেসরকারি ক্ষেত্রে বেতনভুক্ত"> বেসরকারি বেতনভুক্ত</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="সংগঠিত ক্ষেত্রে স্বনিযুক্ত"> সংগঠিত স্বনিযুক্ত</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="আংশিক সময়ের কর্মরত"> আংশিক সময়ের (PART TIME)</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="অসংগঠিত ক্ষেত্রে স্বনিযুক্ত"> অসংগঠিত স্বনিযুক্ত</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="পরিযায়ী শ্রমিক"> পরিযায়ী শ্রমিক</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="বেকার"> বেকার</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hof_emp" value="অন্যান্য"> অন্যান্য</label>
+                    </div>
+                </div>
+                <div id="dynamic-members-step7-emp"></div>
+
+                <div class="input-group">
+                    <label>শিক্ষিত প্রাপ্তবয়স্ক সদস্য সংখ্যা <span style="color:red">*</span></label>
+                    <input type="number" class="input-control" name="edu_adults" min="0" required>
+                    <div class="error-msg">সংখ্যা প্রদান করুন</div>
+                </div>
+                <div class="input-group">
+                    <label>কোনো সদস্য কি সাংবিধানিক পদে আছেন? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="const_post" value="হ্যাঁ" required> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="const_post" value="না"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div class="input-group">
+                    <label>কোনো সদস্য কি সরকারি পেনশনভোগী? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="govt_pensioner" value="হ্যাঁ" required> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="govt_pensioner" value="না"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div class="input-group">
+                    <label>কোনো সদস্য কি GST-নিবন্ধিত? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="has_gst" value="হ্যাঁ" required onchange="document.getElementById('gst-details').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="has_gst" value="না" onchange="document.getElementById('gst-details').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="gst-details" class="hidden input-group" style="padding-left:15px; border-left:2px solid #ccc;">
+                    <label>GSTIN</label>
+                    <input type="text" class="input-control" name="gstin" style="text-transform:uppercase">
+                </div>
+                <div class="input-group">
+                    <label>পরিবারের মোট বার্ষিক আয় (টাকায়) <span style="color:red">*</span></label>
+                    <input type="number" class="input-control" name="annual_income" min="1" required>
+                    <div class="error-msg">সঠিক আয় প্রদান করুন</div>
+                </div>
+            </div>
+
+            <!-- STEP 8 -->
+            <div class="step-section" id="step-8">
+                <div class="step-heading">৮. অন্যান্য পরিচয় নথি (ঙ)</div>
+                
+                <div class="info-box">CAA আবেদন-এর বর্তমান অবস্থা</div>
+                <div class="member-card">
+                    <h4>পরিবারের প্রধান (HOF)</h4>
+                    <div class="input-group">
+                        <select class="input-control" name="hof_caa_status" onchange="toggleCaaInput('hof', this.value)">
+                            <option value="প্রযোজ্য নয়">প্রযোজ্য নয়</option>
+                            <option value="আবেদন করা হয়েছে">আবেদন করা হয়েছে</option>
+                            <option value="ইস্যু করা হয়েছে">ইস্যু করা হয়েছে</option>
+                        </select>
+                    </div>
+                    <div id="hof_caa_input" class="hidden input-group"><label>আবেদন নং / সার্টিফিকেট নং</label><input type="text" class="input-control" name="hof_caa_no"></div>
+                </div>
+                <div id="dynamic-members-step8-caa"></div>
+
+                <div class="info-box">অন্যান্য ক্রেডিট কার্ড (KCC, KCC ARD, Artisan CC, MJCC, Student CC)</div>
+                <div class="member-card">
+                    <h4>পরিবারের প্রধান (HOF)</h4>
+                    <div class="input-group"><label>কার্ডের নাম / নং</label><input type="text" class="input-control" name="hof_cc_name"></div>
+                    <div class="input-group"><label>আইডির সংখ্যা</label><input type="number" class="input-control" name="hof_cc_id_count"></div>
+                    <div class="input-group"><label>ইস্যু তারিখ</label><input type="date" class="input-control" name="hof_cc_date"></div>
+                </div>
+                <div id="dynamic-members-step8-cc"></div>
+
+                <div class="input-group mt-3">
+                    <label>এসআইআর (SIR) ২০২৬ নাম বাদ <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="sir_2026" value="প্রযোজ্য নয়" required onchange="document.getElementById('sir-details').style.display='none'"> প্রযোজ্য নয়</label>
+                        <label class="radio-label"><input type="radio" name="sir_2026" value="না" onchange="document.getElementById('sir-details').style.display='none'"> না</label>
+                        <label class="radio-label"><input type="radio" name="sir_2026" value="হ্যাঁ" onchange="document.getElementById('sir-details').style.display='block'"> হ্যাঁ</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="sir-details" class="hidden input-group" style="padding-left:15px; border-left:2px solid #ccc;">
+                    <label>মামলার বিবরণ</label>
+                    <textarea class="input-control" name="sir_details"></textarea>
+                </div>
+            </div>
+
+            <div class="ad-slot ad-mid hidden" id="ad-mid-5">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+
+            <!-- STEP 9 -->
+            <div class="step-section" id="step-9">
+                <div class="step-heading">৯. সামাজিক মর্যাদা ও নির্ভরশীল (চ)</div>
+                <div class="info-box">বিদ্যালয়ে অধ্যয়নরত শিশুদের তথ্য (সর্বোচ্চ ৪ জন)</div>
+                
+                <div id="children-container">
+                    <!-- Gen via JS -->
+                </div>
+            </div>
+
+            <!-- STEP 10 -->
+            <div class="step-section" id="step-10">
+                <div class="step-heading">১০. সরকারি প্রকল্পের সুবিধা (ছ)</div>
+                
+                <div class="input-group">
+                    <label>পরিবারের প্রধান কি DBT সুবিধা পেয়েছেন? <span style="color:red">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="hof_dbt" value="হ্যাঁ" required onchange="document.getElementById('hof-dbt-table').style.display='block'"> হ্যাঁ</label>
+                        <label class="radio-label"><input type="radio" name="hof_dbt" value="না" onchange="document.getElementById('hof-dbt-table').style.display='none'"> না</label>
+                    </div>
+                    <div class="error-msg">নির্বাচন করুন</div>
+                </div>
+                <div id="hof-dbt-table" class="hidden" style="overflow-x:auto;">
+                    <table>
+                        <tr><th>#</th><th>প্রকল্পের নাম</th><th>প্রত্যাহার করতে চান?</th></tr>
+                        <tr><td>১</td><td><input type="text" class="input-control" name="hof_scheme_1"></td><td><label class="checkbox-label"><input type="checkbox" name="hof_scheme_withdraw_1" value="হ্যাঁ"> হ্যাঁ</label></td></tr>
+                        <tr><td>২</td><td><input type="text" class="input-control" name="hof_scheme_2"></td><td><label class="checkbox-label"><input type="checkbox" name="hof_scheme_withdraw_2" value="হ্যাঁ"> হ্যাঁ</label></td></tr>
+                        <tr><td>৩</td><td><input type="text" class="input-control" name="hof_scheme_3"></td><td><label class="checkbox-label"><input type="checkbox" name="hof_scheme_withdraw_3" value="হ্যাঁ"> হ্যাঁ</label></td></tr>
+                        <tr><td>৪</td><td><input type="text" class="input-control" name="hof_scheme_4"></td><td><label class="checkbox-label"><input type="checkbox" name="hof_scheme_withdraw_4" value="হ্যাঁ"> হ্যাঁ</label></td></tr>
+                        <tr><td>৫</td><td><input type="text" class="input-control" name="hof_scheme_5"></td><td><label class="checkbox-label"><input type="checkbox" name="hof_scheme_withdraw_5" value="হ্যাঁ"> হ্যাঁ</label></td></tr>
+                    </table>
+                </div>
+
+                <div id="dynamic-members-step10"></div>
+            </div>
+
+            <div class="ad-slot ad-mid hidden" id="ad-mid-6">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+
+            <!-- STEP 11 -->
+            <div class="step-section" id="step-11">
+                <div class="step-heading">১১. বাদ দেওয়া ও ঘোষণা (জ)</div>
+                
+                <div class="input-group">
+                    <label>বাদ দেওয়া হলে, কারণ (অফিসার পূরণীয়)</label>
+                    <textarea class="input-control" name="exclusion_reason" placeholder="যদি প্রযোজ্য হয়"></textarea>
+                </div>
+
+                <div class="info-box" style="font-size: 14px; text-align: justify; line-height: 1.6;">
+                    <strong>ঘোষণা ও সম্মতি:</strong><br>
+                    "আমি এই মর্মে ঘোষণা করছি যে, উপরে প্রদত্ত তথ্য আমার জ্ঞান ও বিশ্বাস অনুযায়ী সত্য। যদি কোনো তথ্য মিথ্যা প্রমাণিত হয়, তবে আমার আবেদন বাতিল হতে পারে এবং আইনানুগ ব্যবস্থা গ্রহণ করা হতে পারে।"<br><br>
+                    <em>(এই ফর্মটি যাচাই যোগ্য)</em>
+                </div>
+
+                <div class="input-group">
+                    <label class="checkbox-label" style="font-size: 16px; font-weight: 600; color: var(--primary-dark);">
+                        <input type="checkbox" name="consent" id="consentBox" required style="width:24px; height:24px;"> 
+                        আমি উপরোক্ত ঘোষণায় সম্মত
+                    </label>
+                    <div class="error-msg" id="consentError">আবেদন জমা দেওয়ার আগে সম্মতি প্রদান আবশ্যক</div>
+                </div>
+            </div>
+
+            <!-- STEP 12 -->
+            <div class="step-section" id="step-12">
+                <div class="step-heading">১২. রিভিউ ও জমা</div>
+                <div class="info-box">অনুগ্রহ করে আপনার তথ্য যাচাই করুন এবং 'জমা দিন' বোতামে ক্লিক করুন।</div>
+                
+                <div id="review-accordion">
+                    <!-- Generated via JS -->
+                </div>
+
+                <button type="button" class="btn btn-submit" id="finalSubmitBtn">জমা দিন</button>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="btn-group" id="navButtons">
+                <button type="button" class="btn btn-secondary" id="prevBtn" onclick="nextPrev(-1)">পূর্ববর্তী</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">পরবর্তী</button>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+<aside class="sidebar-ad-wrapper">
+    <div class="ad-slot" id="ad-sidebar">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+</aside>
+</div>
+
+<div class="ad-slot" id="ad-bottom">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7430423489893759"
+     crossorigin="anonymous"></script>
+<!-- https://annapurnabhandergov.netlify.app/ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7430423489893759"
+     data-ad-slot="8617437750"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<footer>
+    <p>এই সাইটটি National Informatics Centre (NIC) দ্বারা ডিজাইন করা হয়েছে।</p>
+    <p>তথ্য, প্রক্রিয়া এবং পরিচালনা পশ্চিমবঙ্গ সরকার দ্বারা রক্ষণাবেক্ষণ করা হয়।</p>
+    <button class="clear-btn" onclick="clearApplication()">আবেদন মুছুন</button>
+</footer>
+
+<!-- Modals & Toasts -->
+<div class="toast" id="resumeToast">
+    আগের অসম্পূর্ণ আবেদন পাওয়া গেছে। চালিয়ে যান?
+    <div class="toast-actions">
+        <button class="toast-btn" onclick="resumeApplication()">হ্যাঁ</button>
+        <button class="toast-btn" style="background:#555;" onclick="document.getElementById('resumeToast').style.display='none'">না</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="successModal">
+    <div class="modal-card">
+        <div class="success-icon">✓</div>
+        <h2 style="color:var(--header-brown); margin-bottom:10px;">আবেদন সফলভাবে জমা হয়েছে!</h2>
+        <p>আপনার আবেদন আইডি:</p>
+        <div class="app-id" id="displayAppId">ANP-0000000000000</div>
+        <p style="font-size:13px; color:#666; margin-bottom:20px;">দয়া করে এই আইডিটি ভবিষ্যতের জন্য সংরক্ষণ করুন।</p>
+        <button class="btn btn-secondary" style="width:100%;" onclick="window.print()">প্রিন্ট করুন</button>
+        <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="location.reload()">নতুন আবেদন</button>
+    </div>
+</div>
+
+<script>
+// --- Configuration & State ---
+let currentStep = 1;
+const totalSteps = 12;
+const MAX_MEMBERS = 5;
+let formDataObj = {};
+
+// --- Dynamic HTML Generators ---
+function generateDynamicHTML() {
+    // Generate up to 5 members but keep them hidden initially
+    let htmlStep2 = '', htmlStep3 = '', htmlStep4 = '', htmlStep6 = '', htmlStep7Pan = '', htmlStep7Emp = '', htmlStep8Caa = '', htmlStep8Cc = '', htmlStep10 = '';
+    
+    for(let i=1; i<=MAX_MEMBERS; i++) {
+        const dNone = `style="display:none;" class="dynamic-member-block member-${i}"`;
+        
+        // Step 2
+        htmlStep2 += `<div ${dNone}><div class="member-card">
+            <h4>সদস্য ${i}</h4>
+            <div class="input-group"><label>নাম</label><input type="text" class="input-control" name="m${i}_name"></div>
+            <div class="input-group"><label>জন্ম তারিখ</label><input type="date" class="input-control" name="m${i}_dob" max="2026-05-29"></div>
+            <div class="input-group"><label>লিঙ্গ</label><select class="input-control" name="m${i}_gender"><option value="">নির্বাচন করুন</option><option value="পুরুষ">পুরুষ</option><option value="মহিলা">মহিলা</option><option value="অন্যান্য">অন্যান্য</option></select></div>
+            <div class="input-group"><label>প্রধানের সঙ্গে সম্পর্ক</label><input type="text" class="input-control" name="m${i}_relation"></div>
+            <div class="input-group"><label>আধার নং</label><input type="text" class="input-control" name="m${i}_aadhaar" maxlength="12" pattern="\\d{12}"></div>
+            <div class="input-group"><label class="checkbox-label"><input type="checkbox" name="m${i}_aadhaar_link" value="হ্যাঁ"> আধার লিংক হ্যাঁ</label></div>
+        </div></div>`;
+
+        // Step 3
+        htmlStep3 += `<div ${dNone}><div class="member-card">
+            <h4>সদস্য ${i}</h4>
+            <div class="input-group"><label>ব্যাংকের নাম</label><input type="text" class="input-control" name="m${i}_bank_name"></div>
+            <div class="input-group"><label>অ্যাকাউন্ট নং</label><input type="text" class="input-control" name="m${i}_acc_no"></div>
+            <div class="input-group"><label>IFSC কোড</label><input type="text" class="input-control" name="m${i}_ifsc" pattern="^[A-Z]{4}0[A-Z0-9]{6}$" style="text-transform:uppercase"></div>
+        </div></div>`;
+
+        // Step 4
+        htmlStep4 += `<div ${dNone}><div class="member-card">
+            <h4>সদস্য ${i}</h4>
+            <div class="input-group"><label>এপিক নং</label><input type="text" class="input-control" name="m${i}_epic"></div>
+            <div class="input-group"><label>বিধানসভা ক্ষেত্র</label><input type="text" class="input-control" name="m${i}_assembly"></div>
+            <div class="input-group"><label>অংশ নং</label><input type="text" class="input-control" name="m${i}_part_no"></div>
+        </div></div>`;
+
+        // Step 6 (Insurance)
+        htmlStep6 += `<div ${dNone}><div class="member-card">
+            <h4>সদস্য ${i}</h4>
+            <div class="checkbox-group mb-2"><label class="checkbox-label"><input type="checkbox" name="m${i}_ins_type" value="সরকারি"> সরকারি</label><label class="checkbox-label"><input type="checkbox" name="m${i}_ins_type" value="বেসরকারি"> বেসরকারি</label></div>
+            <div class="input-group"><label>বিমা অঙ্ক</label><input type="number" class="input-control" name="m${i}_ins_sum"></div>
+            <div class="input-group"><label>প্রিমিয়ামের বিবরণ</label><input type="text" class="input-control" name="m${i}_ins_prem"></div>
+        </div></div>`;
+
+        // Step 7 (PAN & Emp)
+        htmlStep7Pan += `<div ${dNone}><div class="member-card"><h4>সদস্য ${i}</h4><div class="input-group"><label>নাম</label><input type="text" class="input-control" name="m${i}_pan_name"></div><div class="input-group"><label>প্যান নম্বর</label><input type="text" class="input-control" name="m${i}_pan_no" style="text-transform:uppercase"></div></div></div>`;
+        htmlStep7Emp += `<div ${dNone}><div class="member-card"><h4>সদস্য ${i}</h4><div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="সরকারি ক্ষেত্র"> সরকারি ক্ষেত্র</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="বেসরকারি বেতনভুক্ত"> বেসরকারি বেতনভুক্ত</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="সংগঠিত স্বনিযুক্ত"> সংগঠিত স্বনিযুক্ত</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="আংশিক সময়ের"> আংশিক সময়ের</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="অসংগঠিত স্বনিযুক্ত"> অসংগঠিত স্বনিযুক্ত</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="পরিযায়ী শ্রমিক"> পরিযায়ী শ্রমিক</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="বেকার"> বেকার</label>
+            <label class="checkbox-label"><input type="checkbox" name="m${i}_emp" value="অন্যান্য"> অন্যান্য</label>
+        </div></div></div>`;
+
+        // Step 8 (CAA & CC)
+        htmlStep8Caa += `<div ${dNone}><div class="member-card"><h4>সদস্য ${i}</h4><div class="input-group"><select class="input-control" name="m${i}_caa_status" onchange="toggleCaaInput('m${i}', this.value)"><option value="প্রযোজ্য নয়">প্রযোজ্য নয়</option><option value="আবেদন করা হয়েছে">আবেদন করা হয়েছে</option><option value="ইস্যু করা হয়েছে">ইস্যু করা হয়েছে</option></select></div><div id="m${i}_caa_input" class="hidden input-group"><label>আবেদন নং / সার্টিফিকেট নং</label><input type="text" class="input-control" name="m${i}_caa_no"></div></div></div>`;
+        htmlStep8Cc += `<div ${dNone}><div class="member-card"><h4>সদস্য ${i}</h4><div class="input-group"><label>কার্ডের নাম / নং</label><input type="text" class="input-control" name="m${i}_cc_name"></div><div class="input-group"><label>আইডির সংখ্যা</label><input type="number" class="input-control" name="m${i}_cc_id_count"></div><div class="input-group"><label>ইস্যু তারিখ</label><input type="date" class="input-control" name="m${i}_cc_date"></div></div></div>`;
+
+        // Step 10 (Schemes)
+        htmlStep10 += `<div ${dNone}><div class="input-group"><label>সদস্য ${i} কি DBT সুবিধা পেয়েছেন?</label><div class="radio-group"><label class="radio-label"><input type="radio" name="m${i}_dbt" value="হ্যাঁ" onchange="document.getElementById('m${i}-dbt-table').style.display='block'"> হ্যাঁ</label><label class="radio-label"><input type="radio" name="m${i}_dbt" value="না" onchange="document.getElementById('m${i}-dbt-table').style.display='none'"> না</label></div></div><div id="m${i}-dbt-table" class="hidden" style="overflow-x:auto;"><table><tr><th>#</th><th>প্রকল্পের নাম</th><th>প্রত্যাহার?</th></tr>`;
+        for(let j=1; j<=5; j++){
+            htmlStep10 += `<tr><td>${j}</td><td><input type="text" class="input-control" name="m${i}_scheme_${j}"></td><td><label class="checkbox-label"><input type="checkbox" name="m${i}_scheme_withdraw_${j}" value="হ্যাঁ"> হ্যাঁ</label></td></tr>`;
+        }
+        htmlStep10 += `</table></div></div>`;
+    }
+
+    document.getElementById('dynamic-members-step2').innerHTML = htmlStep2;
+    document.getElementById('dynamic-members-step3').innerHTML = htmlStep3;
+    document.getElementById('dynamic-members-step4').innerHTML = htmlStep4;
+    document.getElementById('dynamic-members-step6').innerHTML = htmlStep6;
+    document.getElementById('dynamic-members-step7-pan').innerHTML = htmlStep7Pan;
+    document.getElementById('dynamic-members-step7-emp').innerHTML = htmlStep7Emp;
+    document.getElementById('dynamic-members-step8-caa').innerHTML = htmlStep8Caa;
+    document.getElementById('dynamic-members-step8-cc').innerHTML = htmlStep8Cc;
+    document.getElementById('dynamic-members-step10').innerHTML = htmlStep10;
+
+    // Children (Step 9) - Max 4
+    let htmlChildren = '';
+    for(let i=1; i<=4; i++) {
+        htmlChildren += `<div class="member-card">
+            <h4>শিশু ${i}</h4>
+            <div class="input-group"><label>শিশুর নাম</label><input type="text" class="input-control" name="child${i}_name"></div>
+            <div class="input-group"><label>শ্রেণি</label><input type="text" class="input-control" name="child${i}_class"></div>
+            <div class="input-group"><label>বিদ্যালয়ের নাম</label><input type="text" class="input-control" name="child${i}_school"></div>
+            <div class="input-group"><label>ধরন</label><select class="input-control" name="child${i}_type"><option value="">নির্বাচন করুন</option><option value="সরকারি">সরকারি</option><option value="সরকারি সাহায্যপ্রাপ্ত">সরকারি সাহায্যপ্রাপ্ত</option><option value="বেসরকারি">বেসরকারি</option><option value="স্বীকৃত মাদ্রাসা">স্বীকৃত মাদ্রাসা</option><option value="অন্যান্য মাদ্রাসা">অন্যান্য মাদ্রাসা</option><option value="অন্যান্য">অন্যান্য</option></select></div>
+            <div class="input-group"><label>টিকাকরণের অবস্থা</label><div class="radio-group"><label class="radio-label"><input type="radio" name="child${i}_vax" value="হ্যাঁ সম্পূর্ণ"> হ্যাঁ সম্পূর্ণ</label><label class="radio-label"><input type="radio" name="child${i}_vax" value="হ্যাঁ শুরু"> হ্যাঁ শুরু</label><label class="radio-label"><input type="radio" name="child${i}_vax" value="করা হয়নি"> করা হয়নি</label></div></div>
+        </div>`;
+    }
+    document.getElementById('children-container').innerHTML = htmlChildren;
+}
+
+function updateMemberVisibility() {
+    let count = parseInt(document.getElementById('memberCount').value) || 1;
+    // HOF is 1, so additional members = count - 1. Cap at MAX_MEMBERS.
+    let additionalMembers = count - 1;
+    if(additionalMembers > MAX_MEMBERS) additionalMembers = MAX_MEMBERS;
+    if(additionalMembers < 0) additionalMembers = 0;
+
+    for(let i=1; i<=MAX_MEMBERS; i++) {
+        const blocks = document.querySelectorAll(`.member-${i}`);
+        blocks.forEach(b => {
+            b.style.display = (i <= additionalMembers) ? 'block' : 'none';
+        });
+    }
+}
+
+function toggleCaaInput(prefix, val) {
+    const el = document.getElementById(`${prefix}_caa_input`);
+    if(el) el.style.display = (val !== 'প্রযোজ্য নয়') ? 'block' : 'none';
+}
+
+// --- Initialization ---
+document.addEventListener("DOMContentLoaded", () => {
+    generateDynamicHTML();
+    showStep(currentStep);
+    
+    document.getElementById('memberCount').addEventListener('input', updateMemberVisibility);
+    
+    // Convert inputs to uppercase where needed
+    document.querySelectorAll('input[style*="uppercase"]').forEach(el => {
+        el.addEventListener('input', function() { this.value = this.value.toUpperCase(); });
+    });
+
+    // Check localStorage
+    const savedData = localStorage.getItem('anp_form');
+    if(savedData) {
+        document.getElementById('resumeToast').style.display = 'block';
+    }
+});
+
+// --- Navigation & Validation ---
+function showStep(n) {
+    const steps = document.getElementsByClassName("step-section");
+    for (let i = 0; i < steps.length; i++) {
+        steps[i].classList.remove("active");
+    }
+    steps[n - 1].classList.add("active");
+    
+    // Update Progress
+    document.getElementById("progress-fill").style.width = ((n / totalSteps) * 100) + "%";
+    document.getElementById("step-text").innerText = `ধাপ ${n} / ${totalSteps}`;
+    
+    // Extract title from step heading
+    const heading = steps[n - 1].querySelector('.step-heading').innerText;
+    document.getElementById("step-title").innerText = heading.replace(/^\d+\.\s*/, '');
+
+    // Buttons
+    document.getElementById("prevBtn").style.display = (n == 1) ? "none" : "inline-block";
+    document.getElementById("nextBtn").style.display = (n == totalSteps) ? "none" : "inline-block";
+    
+    // Handle Review Step Generation
+    if(n == totalSteps) {
+        generateReviewAccordion();
+    }
+
+    // Mid Ads logic (show selectively)
+    document.querySelectorAll('.ad-mid').forEach(ad => ad.classList.add('hidden'));
+    if(n === 2) document.getElementById('ad-mid-1').classList.remove('hidden');
+    if(n === 4) document.getElementById('ad-mid-2').classList.remove('hidden');
+    if(n === 6) document.getElementById('ad-mid-3').classList.remove('hidden');
+    if(n === 8) document.getElementById('ad-mid-4').classList.remove('hidden');
+    if(n === 10) document.getElementById('ad-mid-5').classList.remove('hidden');
+    if(n === 11) document.getElementById('ad-mid-6').classList.remove('hidden');
+
+    window.scrollTo(0, 0);
+}
+
+function nextPrev(n) {
+    if (n == 1 && !validateForm()) return false;
+    
+    if(n == 1) saveToLocal(); // Save progress on Next
+    
+    currentStep = currentStep + n;
+    showStep(currentStep);
+}
+
+function showError(input, message) {
+    const group = input.closest('.input-group');
+    if(group) {
+        group.classList.add('has-error');
+        const err = group.querySelector('.error-msg');
+        if(err) err.innerText = message;
+    }
+}
+
+function clearError(input) {
+    const group = input.closest('.input-group');
+    if(group) group.classList.remove('has-error');
+}
+
+function validateForm() {
+    let valid = true;
+    const step = document.getElementById(`step-${currentStep}`);
+    const requiredInputs = step.querySelectorAll('input[required], select[required], textarea[required]');
+    
+    // Clear old errors
+    step.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+
+    // Check required
+    requiredInputs.forEach(input => {
+        if(input.type === 'radio') {
+            const group = step.querySelectorAll(`input[name="${input.name}"]`);
+            const checked = Array.from(group).some(r => r.checked);
+            if(!checked) { valid = false; showError(input, 'এই বিকল্পটি নির্বাচন করুন'); }
+            else { clearError(input); }
+        } else if(input.type === 'checkbox') {
+            if(!input.checked) { valid = false; showError(input, 'সম্মতি প্রদান আবশ্যক'); }
+            else { clearError(input); }
+        } else {
+            if(!input.value.trim()) { valid = false; showError(input, 'এই ঘরটি পূরণ করা আবশ্যক'); }
+            else { clearError(input); }
+        }
+    });
+
+    // Patterns
+    if(valid) {
+        const patterns = step.querySelectorAll('input[pattern]');
+        patterns.forEach(input => {
+            if(input.value && !new RegExp(input.pattern).test(input.value)) {
+                valid = false;
+                showError(input, input.getAttribute('placeholder') || 'সঠিক বিন্যাসে লিখুন');
+            }
+        });
+    }
+
+    if(!valid) {
+        const firstError = step.querySelector('.has-error');
+        if(firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valid;
+}
+
+// --- Data Handling ---
+function saveToLocal() {
+    const formData = new FormData(document.getElementById('anpForm'));
+    const dataObj = {};
+    
+    // Handle normal inputs
+    for (let [key, value] of formData.entries()) {
+        if(!dataObj[key]) {
+            dataObj[key] = value;
+        } else {
+            // Handle multiple checkboxes with same name
+            if(!Array.isArray(dataObj[key])) dataObj[key] = [dataObj[key]];
+            dataObj[key].push(value);
+        }
+    }
+    
+    // Add checkboxes that might be unchecked (FormData ignores them)
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        if(!cb.checked && !dataObj[cb.name]) dataObj[cb.name] = '';
+    });
+
+    localStorage.setItem('anp_form', JSON.stringify(dataObj));
+}
+
+function resumeApplication() {
+    const data = JSON.parse(localStorage.getItem('anp_form'));
+    if(!data) return;
+    
+    Object.keys(data).forEach(key => {
+        const inputs = document.querySelectorAll(`[name="${key}"]`);
+        if(inputs.length === 0) return;
+        
+        const type = inputs[0].type;
+        if(type === 'radio') {
+            inputs.forEach(r => { if(r.value === data[key]) r.checked = true; });
+        } else if(type === 'checkbox') {
+            if(Array.isArray(data[key])) {
+                inputs.forEach(cb => { if(data[key].includes(cb.value)) cb.checked = true; });
+            } else {
+                inputs.forEach(cb => { if(cb.value === data[key] || data[key] === 'on') cb.checked = true; });
+            }
+        } else {
+            inputs[0].value = data[key];
+        }
+    });
+    
+    // Trigger change events to show hidden fields
+    document.querySelectorAll('input[type="radio"]:checked, select').forEach(el => {
+        el.dispatchEvent(new Event('change'));
+    });
+    updateMemberVisibility();
+    
+    document.getElementById('resumeToast').style.display = 'none';
+}
+
+function clearApplication() {
+    if(confirm("আপনি কি নিশ্চিত যে আপনি সমস্ত তথ্য মুছে ফেলতে চান?")) {
+        localStorage.removeItem('anp_form');
+        location.reload();
+    }
+}
+
+// --- Review & Submit ---
+function generateReviewAccordion() {
+    saveToLocal(); // ensure latest data is in form obj
+    const data = JSON.parse(localStorage.getItem('anp_form')) || {};
+    let html = '';
+    
+    for(let i=1; i<=11; i++) {
+        const stepDiv = document.getElementById(`step-${i}`);
+        const title = stepDiv.querySelector('.step-heading').innerText;
+        
+        html += `<details><summary>${title}</summary><div class="details-content">`;
+        
+        // Find all visible inputs in this step
+        const inputs = stepDiv.querySelectorAll('input, select, textarea');
+        const processedNames = new Set();
+        
+        inputs.forEach(inp => {
+            // Skip hidden elements' inputs
+            if(inp.closest('.hidden') || inp.closest('[style*="display: none"]')) return;
+            
+            const name = inp.name;
+            if(!name || processedNames.has(name)) return;
+            processedNames.add(name);
+            
+            let label = name;
+            const labelEl = inp.closest('.input-group')?.querySelector('label');
+            if(labelEl) {
+                // remove asterisk
+                label = labelEl.innerText.replace('*', '').trim();
+            }
+            
+            let val = data[name];
+            if(Array.isArray(val)) val = val.join(', ');
+            if(!val) val = 'প্রযোজ্য নয় / দেওয়া হয়নি';
+            
+            html += `<p><strong>${label}:</strong> ${val}</p>`;
+        });
+        
+        html += `</div></details>`;
+    }
+    document.getElementById('review-accordion').innerHTML = html;
+}
+
+document.getElementById('finalSubmitBtn').addEventListener('click', function() {
+    if(!document.getElementById('consentBox').checked) {
+    document.getElementById('consentError').style.display = 'block';
+        return;
+    }
+    document.getElementById('consentError').style.display = 'none';
+    
+    // Generate ID
+    const appId = "ANP-" + Date.now();
+    document.getElementById('displayAppId').innerText = appId;
+    
+    // Clear storage on successful submit
+    localStorage.removeItem('anp_form');
+    
+    // Show Modal
+    document.getElementById('successModal').style.display = 'flex';
+});
+</script>
+
+</body>
+</html>
